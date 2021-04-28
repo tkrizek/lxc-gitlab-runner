@@ -30,6 +30,9 @@ start_container() {
         #sleep 999999999
 
     lxc-start -n "$CONTAINER_ID"
+
+    # wait for DNS resolution
+    lxc-attach -n "$CONTAINER_ID" -- /bin/bash -c "for i in {1..60}; do if getent hosts $SERVER_HOST &>/dev/null; then exit 0; fi; sleep 1; done; exit 1"
 }
 
 echo "Running in $CONTAINER_ID"
