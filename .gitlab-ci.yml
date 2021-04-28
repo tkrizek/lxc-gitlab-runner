@@ -1,11 +1,15 @@
-image: $CI_REGISTRY/labs/lxc-gitlab-runner/debian/buster
+image: $CI_REGISTRY/labs/lxc-gitlab-runner/debian-10
 
 stages:
-  - test
+  - systemctl
 
-command:
+.systemctl: &systemctl
   tags:
     - lxc
-  stage: test
+  stage: systemctl
   script:
-    - echo "Success"
+    - systemctl is-system-running -q
+
+systemctl:debian-10:
+  <<: *systemctl
+  image: $CI_REGISTRY/labs/lxc-gitlab-runner/debian-10
