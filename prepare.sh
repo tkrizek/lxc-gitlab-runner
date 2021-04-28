@@ -29,7 +29,7 @@ start_container() {
         #"$IMAGE"\
         #sleep 999999999
 
-    lxc-start "$CONTAINER_ID"
+    lxc-start -n "$CONTAINER_ID"
 }
 
 install_dependencies() {
