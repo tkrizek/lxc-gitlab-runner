@@ -16,6 +16,7 @@ start_container() {
     fi
 
     mkdir -p "$CACHE_DIR"
+    echo "Creating LXC container..."
     lxc-create \
         --template oci \
         --name "$CONTAINER_ID" \
@@ -29,27 +30,15 @@ start_container() {
         #"$IMAGE"\
         #sleep 999999999
 
-    lxc-start "$CONTAINER_ID"
-}
+    echo "Starting LXC container..."
+    lxc-start -n "$CONTAINER_ID"
 
-install_dependencies() {
-    # Copy gitlab-runner binary from the server into the container
-    lxc file push /usr/bin/gitlab-runner "$CONTAINER_ID"/usr/bin/gitlab-runner
-
-    # Install bash in systems with APK (e.g., Alpine)
-    lxc-execute -n "$CONTAINER_ID" sh -c 'if ! type bash >/dev/null 2>&1 && type apk >/dev/null 2>&1 ; then echo "APK based distro without bash"; apk add bash; fi'
-
-    # Install git in systems with APT (e.g., Debian)
-    lxc-execute -n "$CONTAINER_ID" /bin/bash -c 'if ! type git >/dev/null 2>&1 && type apt-get >/dev/null 2>&1 ; then echo "APT based distro without git"; apt-get update && apt-get install --no-install-recommends -y ca-certificates git; fi'
-    # Install git in systems with DNF (e.g., Fedora)
-    lxc-execute -n "$CONTAINER_ID" /bin/bash -c 'if ! type git >/dev/null 2>&1 && type dnf >/dev/null 2>&1 ; then echo "DNF based distro without git"; dnf install --setopt=install_weak_deps=False --assumeyes git; fi'
-    # Install git in systems with APK (e.g., Alpine)
-    lxc-execute -n "$CONTAINER_ID" /bin/bash -c 'if ! type git >/dev/null 2>&1 && type apk >/dev/null 2>&1 ; then echo "APK based distro without git"; apk add git; fi'
-    # Install git in systems with YUM (e.g., RHEL<=7)
-    lxc-execute -n "$CONTAINER_ID" /bin/bash -c 'if ! type git >/dev/null 2>&1 && type yum >/dev/null 2>&1 ; then echo "YUM based distro without git"; yum install --assumeyes git; fi'
+    echo "Waiting up to 60s for working DNS resolution..."
+    lxc-attach -n "$CONTAINER_ID" -- /bin/bash -c "for i in {1..60}; do if getent hosts $SERVER_HOST &>/dev/null; then exit 0; fi; sleep 1; done; exit 1"
 }
 
 echo "Running in $CONTAINER_ID"
 
 start_container
-install_dependencies
+
+echo "Container ready"

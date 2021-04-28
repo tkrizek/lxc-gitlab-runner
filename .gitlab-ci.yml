@@ -1,0 +1,11 @@
+image: $CI_REGISTRY/labs/lxc-gitlab-runner/debian/buster
+
+stages:
+  - test
+
+command:
+  tags:
+    - lxc
+  stage: test
+  script:
+    - echo "Success"
