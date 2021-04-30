@@ -23,13 +23,6 @@ start_container() {
         -- \
         -u "docker://$IMAGE"
 
-        #--tty \
-        #--name "$CONTAINER_ID" \
-        #--volume "$CACHE_DIR:/home/user/cache":Z \
-        #"${PODMAN_RUN_ARGS[@]}" \
-        #"$IMAGE"\
-        #sleep 999999999
-
     echo "Starting LXC container..."
     lxc-start -n "$CONTAINER_ID"
 
