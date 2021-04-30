@@ -1,0 +1,60 @@
+---
+- name: install dependencies
+  apt:
+    name:
+      - firewalld
+    state: present
+
+- name: remove ufw
+  apt:
+    name: ufw
+    state: absent
+
+- name: enable and start firewalld
+  service:
+    name: firewalld
+    enabled: yes
+    state: started
+
+- name: secure default interface
+  firewalld:
+    interface: '{{ ansible_default_ipv4.interface }}'
+    zone: public
+    permanent: yes
+    state: enabled
+  notify: reload_firewalld
+
+- name: set tun0 as trusted
+  firewalld:
+    interface: tun0
+    zone: trusted
+    permanent: yes
+    state: enabled
+  notify: reload_firewalld
+
+- name: allow masquerade for internal zone
+  firewalld:
+    zone: internal
+    masquerade: yes
+    permanent: yes
+    state: enabled
+  notify: reload_firewalld
+
+- name: allow dhcp server for internal zone
+  firewalld:
+    zone: internal
+    service: '{{ item }}'
+    permanent: yes
+    state: enabled
+  notify: reload_firewalld
+  loop:
+    - dhcp
+    - dhcpv6
+
+- name: set lxcbr0 as internal
+  firewalld:
+    interface: lxcbr0
+    zone: internal
+    permanent: yes
+    state: enabled
+  notify: reload_firewalld

@@ -1,0 +1,31 @@
+---
+# upstream repository is needed for skopeo (to run OCI containers)
+# FUTURE: skopeo should be in distro repositories since Ubuntu 20.10
+- name: add kubic:libcontainers:stable signing key
+  apt_key:
+    url: https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_{{ ansible_distribution_version }}/Release.key
+    state: present
+
+- name: add kubic_libcontainers:stable OBS repo
+  apt_repository:
+    repo: >
+      deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_{{ ansible_distribution_version }}/ /
+    state: present
+    update_cache: true
+
+- name: install LXC dependencies
+  apt:
+    name:
+      - lxc
+      - skopeo
+      - umoci
+      - jq
+    state: present
+
+- name: clone custom runner scripts
+  git:
+    dest: '{{ lxc_git_dir }}'
+    repo: https://gitlab.nic.cz/labs/lxc-gitlab-runner.git
+
+# TODO nesting
+# TODO unprivileged?

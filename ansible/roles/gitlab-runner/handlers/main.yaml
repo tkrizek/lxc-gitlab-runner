@@ -1,0 +1,6 @@
+---
+- name: restart_gitlab_runner
+  service:
+    name: gitlab-runner.service
+    state: restarted
+  become: true

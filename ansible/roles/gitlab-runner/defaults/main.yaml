@@ -1,0 +1,10 @@
+---
+gitlab_runner_concurrent: 2
+gitlab_runner_url: https://gitlab.nic.cz/
+gitlab_runner_tags:
+  - lxc
+  - amd64
+gitlab_runner_registration_token: ''
+gitlab_runner_scripts_dir: '/var/opt/lxc-gitlab-runner'
+gitlab_runner_builds_dir: '/var/tmp/gitlab-runner/builds'
+gitlab_runner_cache_dir: '/var/tmp/gitlab-runner/cache'

@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: true
+  vars_prompt:
+    - name: gitlab_runner_registration_token
+      prompt: GitLab runner registration token (empty to skip)
+      private: false
+  roles:
+    - lxc  # lxc setup first to create lxcbr0
+    - gitlab-runner
+    - firewalld

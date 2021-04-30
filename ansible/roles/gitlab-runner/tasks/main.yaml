@@ -1,0 +1,51 @@
+---
+- name: gitlab - add upstream signing key
+  apt_key:
+    url: https://packages.gitlab.com/runner/gitlab-runner/gpgkey
+    state: present
+
+- name: gitlab - add upstream repository
+  apt_repository:
+    repo: >
+      deb https://packages.gitlab.com/runner/gitlab-runner/ubuntu/
+      {{ ansible_distribution_release }} main
+    state: present
+
+- name: install gitlab runner
+  package:
+    name: gitlab-runner
+    state: present
+
+# TODO drop-in for gitlab-runner user/group
+# TODO change owner of /etc/gitlab-runner (or move?)
+
+- name: ensure service is enabled and started
+  service:
+    name: gitlab-runner.service
+    state: started
+    enabled: true
+
+- name: create runner dirs
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: gitlab-runner
+    group: gitlab-runner
+  loop:
+    - '{{ gitlab_runner_builds_dir }}'
+    - '{{ gitlab_runner_cache_dir }}'
+
+- name: register gitlab runner
+  shell: >
+    gitlab-runner register -n
+    --tag-list '{{ gitlab_runner_tags | join(",") }}'
+    -r '{{ gitlab_runner_registration_token }}'
+    -u '{{ gitlab_runner_url }}'
+    --executor custom
+    --request-concurrency {{ gitlab_runner_concurrent }}
+    --custom-prepare-exec "{{ gitlab_runner_scripts_dir }}/prepare.sh"
+    --custom-run-exec "{{ gitlab_runner_scripts_dir }}/run.sh"
+    --custom-cleanup-exec "{{ gitlab_runner_scripts_dir }}/cleanup.sh"
+    --builds-dir "{{ gitlab_runner_builds_dir }}"
+    --cache-dir "{{ gitlab_runner_cache_dir }}"
+  when: gitlab_runner_registration_token != ""
