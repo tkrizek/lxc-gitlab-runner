@@ -1,0 +1,2 @@
+# USERNAME TYPE BRIDGE COUNT
+{{ lxc_user }} veth lxcbr0 50

@@ -1,2 +1,4 @@
 ---
 lxc_git_dir: '/var/opt/lxc-gitlab-runner'
+lxc_id_start: 5000000
+lxc_user: gitlab-runner

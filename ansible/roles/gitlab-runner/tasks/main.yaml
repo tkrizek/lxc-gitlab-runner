@@ -27,6 +27,9 @@
   copy:
     src: override.conf
     dest: /etc/systemd/system/gitlab-runner.service.d/override.conf
+  notify:
+    - reload_systemd
+    - restart_gitlab_runner
 
 - name: fix /etc/gitlab-runner ownership
   file:

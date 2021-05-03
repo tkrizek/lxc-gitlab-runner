@@ -27,5 +27,30 @@
     dest: '{{ lxc_git_dir }}'
     repo: https://gitlab.nic.cz/labs/lxc-gitlab-runner.git
 
+- name: create config dir
+  file:
+    path: '/home/{{ lxc_user }}/.config/lxc'
+    state: directory
+    owner: '{{ lxc_user }}'
+    group: '{{ lxc_user }}'
+    mode: 0750
+
+- name: deploy default lxc.conf
+  template:
+    src: lxc.conf
+    dest: /home/{{ lxc_user }}/.config/lxc/default.conf
+
+- name: add subuid/subgid for LXC user
+  lineinfile:
+    line: gitlab-runner:{{ lxc_id_start }}:65536
+    path: '{{ item }}'
+  loop:
+    - /etc/subuid
+    - /etc/subgid
+
+- name: configure lxc-usernet
+  template:
+    src: lxc-usernet
+    dest: '/etc/lxc/lxc-usernet'
+
 # TODO nesting
-# TODO unprivileged?
