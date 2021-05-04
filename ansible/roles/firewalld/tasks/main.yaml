@@ -51,10 +51,26 @@
     - dhcp
     - dhcpv6
 
-- name: set lxcbr0 as internal
+- name: set lxc interface as internal
   firewalld:
-    interface: lxcbr0
+    interface: '{{ firewalld_lxc_interface }}'
     zone: internal
     permanent: yes
     state: enabled
   notify: reload_firewalld
+
+- name: create systemd override dir
+  file:
+    path: '{{ firewalld_systemd_override_dir }}'
+    state: 'directory'
+
+- name: wait for lxc interface on startup
+  template:
+    src: override.conf
+    dest: '{{ firewalld_systemd_override_dir }}/override.conf'
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - reload_systemd
+    - restart_firewalld

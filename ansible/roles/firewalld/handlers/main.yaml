@@ -1,3 +1,15 @@
 ---
+- name: reload_systemd
+  systemd:
+    daemon_reload: true
+  notify:
+    - restart_firewalld
+
+- name: restart_firewalld
+  service:
+    name: firewalld.service
+    state: restarted
+  become: true
+
 - name: reload_firwalld
   shell: firewall-cmd --reload
