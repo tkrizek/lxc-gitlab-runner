@@ -24,6 +24,7 @@ start_container() {
         -u "docker://$IMAGE"
 
     echo "Starting LXC container..."
+    export DBUS_SESSION_BUS_ADDRESS
     systemd-run --user --scope -p "Delegate=yes" lxc-start -n "$CONTAINER_ID"
 
     echo "Waiting up to 60s for working DNS resolution..."
