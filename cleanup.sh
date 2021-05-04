@@ -8,6 +8,7 @@ source "${currentDir}"/base.sh
 
 echo "Deleting container $CONTAINER_ID"
 
+lxc-stop -n "$CONTAINER_ID"
 lxc-destroy -f -n "$CONTAINER_ID"
 
 # Delete leftover files in /tmp
