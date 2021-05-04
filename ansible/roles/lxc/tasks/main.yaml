@@ -53,4 +53,7 @@
     src: lxc-usernet
     dest: '/etc/lxc/lxc-usernet'
 
+- name: enable lingering for LXC user
+  command: "loginctl enable-linger {{ lxc_user }}"
+
 # TODO nesting
