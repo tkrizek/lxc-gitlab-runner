@@ -24,5 +24,6 @@ nesting: # test container nesting on runner
   tags:
     - lxc
   stage: infra
+  needs: []
   script:
     - podman run $CI_REGISTRY/labs/lxc-gitlab-runner/fedora-34:podman true
