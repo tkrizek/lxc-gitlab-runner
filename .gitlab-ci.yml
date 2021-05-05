@@ -8,7 +8,7 @@ stages:
     - lxc
   stage: systemctl
   script:
-    - systemctl is-system-running -q
+    - systemctl is-active dbus.service -q
 
 systemctl:debian-10:
   <<: *systemctl
