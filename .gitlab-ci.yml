@@ -18,3 +18,11 @@ image:debian-10:
 image:fedora-34:
   <<: *systemctl
   image: $CI_REGISTRY/labs/lxc-gitlab-runner/fedora-34
+
+nesting: # test container nesting on runner
+  image: $CI_REGISTRY/labs/lxc-gitlab-runner/fedora-34:podman
+  tags:
+    - lxc
+  stage: infra
+  script:
+    - podman run $CI_REGISTRY/labs/lxc-gitlab-runner/fedora-34:podman true
