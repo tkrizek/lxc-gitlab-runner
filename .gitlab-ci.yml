@@ -1,15 +1,20 @@
 image: $CI_REGISTRY/labs/lxc-gitlab-runner/debian-10
 
 stages:
-  - systemctl
+  - images
+  - infra
 
 .systemctl: &systemctl
   tags:
     - lxc
-  stage: systemctl
+  stage: images
   script:
     - systemctl is-active dbus.service -q
 
-systemctl:debian-10:
+image:debian-10:
   <<: *systemctl
   image: $CI_REGISTRY/labs/lxc-gitlab-runner/debian-10
+
+image:fedora-34:
+  <<: *systemctl
+  image: $CI_REGISTRY/labs/lxc-gitlab-runner/fedora-34
