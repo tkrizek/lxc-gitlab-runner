@@ -16,28 +16,6 @@
     name: gitlab-runner
     state: present
 
-- name: create systemd drop-in dir
-  file:
-    path: /etc/systemd/system/gitlab-runner.service.d
-    state: directory
-    owner: gitlab-runner
-    group: gitlab-runner
-
-- name: create gitlab-runner drop-in
-  copy:
-    src: override.conf
-    dest: /etc/systemd/system/gitlab-runner.service.d/override.conf
-  notify:
-    - reload_systemd
-    - restart_gitlab_runner
-
-- name: fix /etc/gitlab-runner ownership
-  file:
-    path: /etc/gitlab-runner
-    owner: gitlab-runner
-    group: gitlab-runner
-    recurse: true
-
 - name: ensure service is enabled and started
   service:
     name: gitlab-runner.service

@@ -1,10 +1,4 @@
 ---
-- name: reload_systemd
-  systemd:
-    daemon_reload: true
-  notify:
-    - restart_gitlab_runner
-
 - name: restart_gitlab_runner
   service:
     name: gitlab-runner.service
