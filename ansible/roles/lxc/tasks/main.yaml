@@ -31,3 +31,10 @@
   template:
     src: lxc.conf
     dest: /etc/lxc/default.conf
+
+- name: disable apparmor for lxc-start
+  file:
+    src: /etc/apparmor.d/usr.bin.lxc-start
+    dest: /etc/apparmor.d/disable/usr.bin.lxc-start
+    state: link
+  notify: reboot
