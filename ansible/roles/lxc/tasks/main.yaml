@@ -27,10 +27,15 @@
     dest: '{{ lxc_git_dir }}'
     repo: https://gitlab.nic.cz/labs/lxc-gitlab-runner.git
 
-- name: deploy default lxc.conf
-  template:
-    src: lxc.conf
+- name: deploy default.conf
+  copy:
+    src: default.conf
     dest: /etc/lxc/default.conf
+
+- name: deploy oci.common.conf
+  copy:
+    src: oci.common.conf
+    dest: /usr/share/lxc/config/oci.common.conf
 
 - name: disable apparmor for lxc-start
   file:
