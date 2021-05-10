@@ -11,5 +11,5 @@
     state: restarted
   become: true
 
-- name: reload_firwalld
+- name: reload_firewalld
   shell: firewall-cmd --reload
