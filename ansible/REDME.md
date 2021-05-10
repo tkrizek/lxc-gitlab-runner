@@ -1,3 +1,17 @@
 # Ansible Role for Deploying lxc-gitlab-runner
 
-Intended for Ubuntu. Tested only with 20.04.
+## Supported host OS
+
+- Ubuntu 20.04
+
+## Usage
+
+setup.yaml playbook is used for both initial setup and runner registration.
+
+To skip runner registration, use empty token when prompted. To register runner
+to multiple projects/groups, re-run the playbook with different registration
+tokens.
+
+```
+ansible-playbook -i inventory/host setup.yaml
+```
