@@ -46,3 +46,12 @@
     --builds-dir "{{ gitlab_runner_builds_dir }}"
     --cache-dir "{{ gitlab_runner_cache_dir }}"
   when: gitlab_runner_registration_token != ""
+
+- name: set concurrent option
+  lineinfile:
+    dest: /etc/gitlab-runner/config.toml
+    regexp: '^(\s*)concurrent ='
+    line: '\1concurrent = {{ gitlab_runner_concurrent }}'
+    state: present
+    backrefs: yes
+  notify: restart_gitlab_runner
