@@ -26,4 +26,5 @@ nesting: # test container nesting on runner
   stage: infra
   needs: []
   script:
+    - unset TMPDIR
     - podman run $CI_REGISTRY/labs/lxc-gitlab-runner/fedora-34:podman true
