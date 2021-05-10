@@ -1,0 +1,5 @@
+---
+gitlab_runner_tags:
+  - lxc
+  - amd64
+gitlab_runner_concurrent: 8
