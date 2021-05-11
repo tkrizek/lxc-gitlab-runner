@@ -16,7 +16,8 @@ RUN mkdir -p /etc/systemd/system/console-getty.service.d
 COPY console-getty.conf /etc/systemd/system/console-getty.service.d/override.conf
 
 # gitlab runner is needed for artifacts/cache
-RUN curl -LJO "https://gitlab-runner-downloads.s3.amazonaws.com/latest/deb/gitlab-runner_${ARCH}.deb"
-RUN dpkg -i "gitlab-runner_${ARCH}.deb"
+RUN curl -LJO "https://gitlab-runner-downloads.s3.amazonaws.com/latest/deb/gitlab-runner_${ARCH}.deb" \
+	&& dpkg -i "gitlab-runner_${ARCH}.deb" \
+	&& rm "gitlab-runner_${ARCH}.deb"
 
 CMD ["/sbin/init"]
