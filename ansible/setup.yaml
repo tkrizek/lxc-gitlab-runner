@@ -5,7 +5,19 @@
     - name: gitlab_runner_registration_token
       prompt: GitLab runner registration token (empty to skip)
       private: false
+  pre_tasks:
+    - name: update package cache
+      apt:
+        update_cache: yes
+    - name: update all packages
+      apt:
+        name: "*"
+        state: latest
   roles:
     - lxc  # lxc setup first to create lxcbr0
     - gitlab-runner
     - firewalld
+  # NOTE: On fresh installations, this used to have an issue with masquerade in
+  # firewalld, which didn't forward traffic from container network. It might
+  # have been due to unupdated packages, or there may be a missing dependency,
+  # which was installed by another playbook.
