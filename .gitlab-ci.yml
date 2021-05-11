@@ -18,7 +18,7 @@ image:debian-10:
 
 image:ubuntu-20.04:
   <<: *systemctl
-  image: $CI_REGISTRY/labs/lxc-gitlab-runner/ubuntu:20.04
+  image: $CI_REGISTRY/labs/lxc-gitlab-runner/ubuntu-20.04
 
 image:centos-7:
   <<: *systemctl
