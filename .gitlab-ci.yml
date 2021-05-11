@@ -12,31 +12,31 @@ stages:
   script:
     - systemctl is-system-running -q
 
-image:debian-10:
+debian-10:image:
   <<: *systemctl
   image: $CI_REGISTRY/labs/lxc-gitlab-runner/debian-10
 
-image:ubuntu-18.04:
+ubuntu-18.04:image:
   <<: *systemctl
   image: $CI_REGISTRY/labs/lxc-gitlab-runner/ubuntu-18.04
 
-image:ubuntu-20.04:
+ubuntu-20.04:image:
   <<: *systemctl
   image: $CI_REGISTRY/labs/lxc-gitlab-runner/ubuntu-20.04
 
-image:centos-7:
+centos-7:image:
   <<: *systemctl
   image: $CI_REGISTRY/labs/lxc-gitlab-runner/centos-7
 
-image:centos-8:
+centos-8:image:
   <<: *systemctl
   image: $CI_REGISTRY/labs/lxc-gitlab-runner/centos-8
 
-image:fedora-33:
+fedora-33:image:
   <<: *systemctl
   image: $CI_REGISTRY/labs/lxc-gitlab-runner/fedora-33
 
-image:fedora-34:
+fedora-34:image:
   <<: *systemctl
   image: $CI_REGISTRY/labs/lxc-gitlab-runner/fedora-34
 
