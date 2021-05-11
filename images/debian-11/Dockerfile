@@ -5,6 +5,7 @@ ARG ARCH=amd64
 
 RUN apt-get update && apt-get install -y \
 		systemd \
+		init \
 		dhcpcd5 \
 		curl \
 		git \
