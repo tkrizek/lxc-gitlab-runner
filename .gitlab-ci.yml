@@ -12,6 +12,10 @@ stages:
   script:
     - systemctl is-system-running -q
 
+debian-9:image:
+  <<: *systemctl
+  image: $CI_REGISTRY/labs/lxc-gitlab-runner/debian-9
+
 debian-10:image:
   <<: *systemctl
   image: $CI_REGISTRY/labs/lxc-gitlab-runner/debian-10
