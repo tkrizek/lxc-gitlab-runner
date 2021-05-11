@@ -20,6 +20,10 @@ debian-10:image:
   <<: *systemctl
   image: $CI_REGISTRY/labs/lxc-gitlab-runner/debian-10
 
+debian-11:image:
+  <<: *systemctl
+  image: $CI_REGISTRY/labs/lxc-gitlab-runner/debian-11
+
 ubuntu-18.04:image:
   <<: *systemctl
   image: $CI_REGISTRY/labs/lxc-gitlab-runner/ubuntu-18.04
