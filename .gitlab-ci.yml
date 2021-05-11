@@ -20,6 +20,10 @@ image:centos-7:
   <<: *systemctl
   image: $CI_REGISTRY/labs/lxc-gitlab-runner/centos-7
 
+image:centos-8:
+  <<: *systemctl
+  image: $CI_REGISTRY/labs/lxc-gitlab-runner/centos-8
+
 image:fedora-33:
   <<: *systemctl
   image: $CI_REGISTRY/labs/lxc-gitlab-runner/fedora-33
