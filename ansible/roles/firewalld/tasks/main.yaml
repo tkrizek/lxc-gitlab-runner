@@ -59,15 +59,17 @@
     state: enabled
   notify: reload_firewalld
 
-- name: create systemd override dir
+- name: create systemd override dirs
   file:
-    path: '{{ firewalld_systemd_override_dir }}'
+    path: '{{ item }}'
     state: 'directory'
+  loop:
+    - '{{ firewalld_lxc_net_systemd_override_dir }}'
 
-- name: wait for lxc interface on startup
+- name: override lxc-net.service to work properly
   template:
-    src: override.conf
-    dest: '{{ firewalld_systemd_override_dir }}/override.conf'
+    src: override.lxc-net.conf
+    dest: '{{ firewalld_lxc_net_systemd_override_dir }}/override.conf'
     owner: root
     group: root
     mode: 0644
