@@ -31,6 +31,9 @@ start_container() {
 
     echo "Waiting up to 30s for systemd startup..."
     lxc-attach -n "$CONTAINER_ID" -- /bin/bash -c "for i in {1..30}; do if systemctl is-system-running -q &>/dev/null; then exit 0; fi; sleep 1; done; exit 1"
+
+    # Ensure TMPDIR is created inside container as well (e.g. for artifact download)
+    lxc-attach -n "$CONTAINER_ID" -- /bin/bash -c "mkdir $TMPDIR"
 }
 
 echo "Running in $CONTAINER_ID"
