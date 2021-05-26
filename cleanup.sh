@@ -13,5 +13,6 @@ lxc-destroy -f -n "$CONTAINER_ID"
 
 # Delete leftover files in /tmp
 rm -r "$TMPDIR"
+rm -f "/var/log/lxc/$CONTAINER_ID.log"
 
 exit 0
