@@ -1,3 +1,0 @@
----
-firewalld_lxc_net_systemd_override_dir: '/etc/systemd/system/lxc-net.service.d'
-firewalld_lxc_interface: 'lxcbr0'

@@ -14,6 +14,5 @@
         name: "*"
         state: latest
   roles:
-    - lxc  # lxc setup first to create lxcbr0
+    - lxc
     - gitlab-runner
-    - firewalld
