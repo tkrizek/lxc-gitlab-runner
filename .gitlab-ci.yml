@@ -44,6 +44,10 @@ centos-8:image:
   <<: *systemctl
   image: $CI_REGISTRY/labs/lxc-gitlab-runner/centos-8
 
+rocky-8:image:
+  <<: *systemctl
+  image: $CI_REGISTRY/labs/lxc-gitlab-runner/rocky-8
+
 fedora-33:image:
   <<: *systemctl
   image: $CI_REGISTRY/labs/lxc-gitlab-runner/fedora-33
