@@ -36,6 +36,10 @@ ubuntu-21.04:image:
   <<: *systemctl
   image: $CI_REGISTRY/labs/lxc-gitlab-runner/ubuntu-21.04
 
+ubuntu-21.10:image:
+  <<: *systemctl
+  image: $CI_REGISTRY/labs/lxc-gitlab-runner/ubuntu-21.10
+
 centos-7:image:
   <<: *systemctl
   image: $CI_REGISTRY/labs/lxc-gitlab-runner/centos-7
@@ -55,6 +59,10 @@ fedora-33:image:
 fedora-34:image:
   <<: *systemctl
   image: $CI_REGISTRY/labs/lxc-gitlab-runner/fedora-34
+
+fedora-35:image:
+  <<: *systemctl
+  image: $CI_REGISTRY/labs/lxc-gitlab-runner/fedora-35
 
 opensuse-15.2:image:
   <<: *systemctl
